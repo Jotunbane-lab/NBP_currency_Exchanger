@@ -10,14 +10,14 @@ public class ExchangeLauncher {
         int flag;
         Scanner scan = new Scanner(System.in);
         do {
-            System.out.println("Wybierz cznność:");
+            System.out.println("Wybierz czynność:");
             System.out.println("1- Przelicz złotówki na inną walutę");
             System.out.println("2- Przelicz inną walutę na złotówki");
             System.out.println("9- Wyjście");
             flag = scan.nextInt();
             switch (flag) {
                 case 1: {
-                    CurrecyExchangeService.exchangeFromPLN();
+                    System.out.println(CurrecyExchangeService.exchangeFromPLN());
                 }
                 case 2: {
                     CurrecyExchangeService.exchangeToPLN();

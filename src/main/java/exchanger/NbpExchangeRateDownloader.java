@@ -11,6 +11,7 @@ public class NbpExchangeRateDownloader {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

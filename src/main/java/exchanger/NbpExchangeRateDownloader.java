@@ -9,6 +9,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class NbpExchangeRateDownloader {
+    private static NbpExchangeRateDownloader instance;
+
+    private NbpExchangeRateDownloader() {
+    }
+
+    public static NbpExchangeRateDownloader getInstance() {
+        if(instance == null){
+            instance = new NbpExchangeRateDownloader();
+        }
+        return instance;
+    }
+
     public NbpExchangeRateResult check(String currencyCode) {
         int responseCode = 0;
         NbpExchangeRateSeries series = null;

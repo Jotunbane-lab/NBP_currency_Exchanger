@@ -11,6 +11,8 @@ public class CurrecyExchangeService {
         System.out.println("Podaj sumę do przeliczenia:");
         int amount = scan.nextInt();
 
+
+
         return null;
     }
 

@@ -1,5 +1,7 @@
 package launcher;
 
+import service.CurrecyExchangeService;
+
 import java.util.Scanner;
 
 public class ExchangeLauncher {
@@ -13,16 +15,18 @@ public class ExchangeLauncher {
             System.out.println("2- Przelicz inną walutę na złotówki");
             System.out.println("9- Wyjście");
             flag = scan.nextInt();
-            switch (flag){
-                case 1:{
-
+            switch (flag) {
+                case 1: {
+                    CurrecyExchangeService.exchangeFromPLN();
                 }
-                case 2:{
-            }
-                default:{}
+                case 2: {
+                    CurrecyExchangeService.exchangeToPLN();
+                }
+                default: {
+                }
             }
 
-        }while (flag!=9);
+        } while (flag != 9);
 
 
     }

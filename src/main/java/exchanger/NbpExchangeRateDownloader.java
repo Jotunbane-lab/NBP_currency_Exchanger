@@ -24,7 +24,7 @@ public class NbpExchangeRateDownloader {
     public NbpExchangeRateResult check(String currencyCode) {
         int responseCode = 0;
         NbpExchangeRateSeries series = null;
-        String errorMessage = "N/A";
+        String responseMessage = "N/A";
         try {
             URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/" + currencyCode+"/last/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -37,15 +37,15 @@ public class NbpExchangeRateDownloader {
             series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
 
             responseCode = conn.getResponseCode();
-            errorMessage = conn.getResponseMessage();
+            responseMessage = conn.getResponseMessage();
 
 
             conn.disconnect();
 
         } catch (IOException e) {
-            System.out.println("Błąd 404");
+            System.out.println(e);
         }
-        return (new NbpExchangeRateResult(series, responseCode, errorMessage));
+        return new NbpExchangeRateResult(series, responseCode, responseMessage);
     }
 
 

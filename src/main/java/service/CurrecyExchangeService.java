@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class CurrecyExchangeService {
 
 
-    public static ExchangeResult exchangeToPLNFrom(int amount, String currencyCode, LocalDate date) {
+    public static ExchangeResult exchangeToPLNFrom(String amount, String currencyCode, LocalDate date) {
         Scanner scan = new Scanner(System.in);
         NbpExchangeRateDownloader nERDL = NbpExchangeRateDownloader.getInstance();
         BigDecimal res = BigDecimal.ZERO;
@@ -19,7 +19,7 @@ public class CurrecyExchangeService {
         NbpExchangeRateResult rate = nERDL.check(currencyCode, date);
         if (rate != null) {
             if (rate.getResponseCode() == 200) {
-                res = ((rate.getSeries().getRates().get(0).getMid()).multiply(BigDecimal.valueOf(amount)));
+                res = ((rate.getSeries().getRates().get(0).getMid()).multiply(new BigDecimal(amount)));
             }
 
 
@@ -27,7 +27,7 @@ public class CurrecyExchangeService {
         } else return new ExchangeResult(res, 500, "Unable to Connect");
     }
 
-    public static ExchangeResult exchangeFromPLNto(int amount, String currencyCode, LocalDate date) {
+    public static ExchangeResult exchangeFromPLNto(String amount, String currencyCode, LocalDate date) {
         Scanner scan = new Scanner(System.in);
         NbpExchangeRateDownloader nERDL = NbpExchangeRateDownloader.getInstance();
         BigDecimal res = BigDecimal.ZERO;
@@ -35,8 +35,8 @@ public class CurrecyExchangeService {
         NbpExchangeRateResult rate = nERDL.check(currencyCode, date);
         if (rate != null) {
             if (rate.getResponseCode() == 200) {
-               // res = ((rate.getSeries().getRates().get(0).getMid()).multiply(BigDecimal.valueOf(amount)));
-                res = BigDecimal.valueOf(amount).divide((rate.getSeries().getRates().get(0).getMid()),2, RoundingMode.DOWN);
+
+                res = (new BigDecimal(amount).divide((rate.getSeries().getRates().get(0).getMid()),2, RoundingMode.DOWN));
             }
 
 

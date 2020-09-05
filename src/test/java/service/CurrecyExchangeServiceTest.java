@@ -13,7 +13,7 @@ class CurrecyExchangeServiceTest {
     @Test
     public void CurrencyExchangeServiceExchangesValidCurrencies(){
 //        given
-        int validAmount = 10;
+        String validAmount = "10";
         String validCurrencyCode = "EUR";
         LocalDate validDate = LocalDate.of(2020,9,4);
 
@@ -27,7 +27,7 @@ class CurrecyExchangeServiceTest {
     @Test
     public void CurrencyExchangeServiceRecognizeInvalidCurrencies(){
         //given
-        int validAmount = 10;
+        String validAmount = "10";
         String invalidCurrencyCode = "Rww";
         LocalDate validDate = LocalDate.of(2020, 9, 4);
         int expectedResponseCode = 404;

@@ -10,7 +10,7 @@ public class ExchangeLauncher {
     public static void main(String[] args) {
         int flag;
         String currencyCode = null;
-        int amount=0;
+        String amount=null;
         LocalDate exchangeRateDate=null;
         Scanner scan = new Scanner(System.in);
         do {
@@ -24,7 +24,7 @@ public class ExchangeLauncher {
                 System.out.println("Podaj trzy literowy kod waluty:");
                 currencyCode = scan.next();
                 System.out.println("Podaj sumę do przeliczenia:");
-                amount = scan.nextInt();
+                amount = scan.next();
                 System.out.println("Podaj datę z której pobiorę kurs "+currencyCode);
                 System.out.print("Rok: ");
                 int year = scan.nextInt();
@@ -38,10 +38,11 @@ public class ExchangeLauncher {
             switch (flag) {
                 case 2: {
                     System.out.println(CurrecyExchangeService.exchangeToPLNFrom(amount,currencyCode,exchangeRateDate));
+                    break;
                 }
                 case 1: {
                     System.out.println(CurrecyExchangeService.exchangeFromPLNto(amount,currencyCode,exchangeRateDate));
-
+                    break;
 
                 }
                 default: {

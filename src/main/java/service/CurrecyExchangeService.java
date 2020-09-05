@@ -36,7 +36,7 @@ public class CurrecyExchangeService {
         if (rate != null) {
             if (rate.getResponseCode() == 200) {
 
-                res = (new BigDecimal(amount).divide((rate.getSeries().getRates().get(0).getMid()),2, RoundingMode.DOWN));
+                res = (new BigDecimal(amount).divide((rate.getSeries().getRates().get(0).getMid()), 2, RoundingMode.DOWN));
             }
 
 

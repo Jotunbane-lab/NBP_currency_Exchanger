@@ -26,7 +26,7 @@ public class NbpExchangeRateResult {
         this.series = series;
         this.responseCode = responseCode;
         this.errorMessage = errorMessage;
-        if (responseCode != 200) this.status="Fail";
+        if (responseCode != 200) this.status = "Fail";
         else this.status = "Succes";
     }
 }

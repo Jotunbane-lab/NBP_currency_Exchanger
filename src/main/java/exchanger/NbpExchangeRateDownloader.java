@@ -39,13 +39,10 @@ public class NbpExchangeRateDownloader {
             if (responseCode == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
                 series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
-                conn.disconnect();
-                return new NbpExchangeRateResult(series, responseCode, responseMessage);
-            } else {
-                conn.disconnect();
-                return new NbpExchangeRateResult(series, responseCode, responseMessage);
 
             }
+            conn.disconnect();
+            return new NbpExchangeRateResult(series, responseCode, responseMessage);
 
 
         } catch (

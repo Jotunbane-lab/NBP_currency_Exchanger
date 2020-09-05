@@ -17,9 +17,12 @@ public class CurrecyExchangeService {
         String currencyCode = scan.nextLine();
         System.out.println("Podaj sumę do przeliczenia:");
         int amount = scan.nextInt();
+        BigDecimal res = BigDecimal.ZERO;
 
         NbpExchangeRateResult rate = nERDL.check(currencyCode);
-        BigDecimal res = ((rate.getSeries().getRates().get(0).getMid()).multiply(BigDecimal.valueOf(amount)));
+        if (rate.getResponseCode()==200) {
+            res = ((rate.getSeries().getRates().get(0).getMid()).multiply(BigDecimal.valueOf(amount)));
+       }
 
 
         return new ExchangeResult(res,rate.getResponseCode(),rate.getErrorMessage());

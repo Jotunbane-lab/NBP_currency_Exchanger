@@ -1,6 +1,5 @@
 package service;
 
-import exchanger.NbpExchangeRateResult;
 import org.junit.jupiter.api.Test;
 
 
@@ -20,7 +19,7 @@ class CurrecyExchangeServiceTest {
 
         BigDecimal expectedValue = new BigDecimal("44.5080");
 //        when
-        ExchangeResult result = CurrecyExchangeService.exchangeFromPLN(validAmount, validCurrencyCode, validDate);
+        ExchangeResult result = CurrecyExchangeService.exchangeToPLNFrom(validAmount, validCurrencyCode, validDate);
 //        then
         assertEquals(expectedValue,result.getResult());
     }
@@ -34,7 +33,7 @@ class CurrecyExchangeServiceTest {
         int expectedResponseCode = 404;
 
         //when
-        ExchangeResult result = CurrecyExchangeService.exchangeFromPLN(validAmount, invalidCurrencyCode, validDate);
+        ExchangeResult result = CurrecyExchangeService.exchangeToPLNFrom(validAmount, invalidCurrencyCode, validDate);
 
         //then
         assertEquals(result.getResponseCode(), expectedResponseCode);

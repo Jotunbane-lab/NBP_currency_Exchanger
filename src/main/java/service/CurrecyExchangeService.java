@@ -4,13 +4,14 @@ import exchanger.NbpExchangeRateDownloader;
 import exchanger.NbpExchangeRateResult;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class CurrecyExchangeService {
 
 
-    public static ExchangeResult exchangeFromPLN(int amount, String currencyCode, LocalDate date) {
+    public static ExchangeResult exchangeToPLNFrom(int amount, String currencyCode, LocalDate date) {
         Scanner scan = new Scanner(System.in);
         NbpExchangeRateDownloader nERDL = NbpExchangeRateDownloader.getInstance();
         BigDecimal res = BigDecimal.ZERO;
@@ -26,9 +27,20 @@ public class CurrecyExchangeService {
         } else return new ExchangeResult(res, 500, "Unable to Connect");
     }
 
-    public static ExchangeResult exchangeToPLN(int amount, String currencyCode) {
+    public static ExchangeResult exchangeFromPLNto(int amount, String currencyCode, LocalDate date) {
+        Scanner scan = new Scanner(System.in);
+        NbpExchangeRateDownloader nERDL = NbpExchangeRateDownloader.getInstance();
+        BigDecimal res = BigDecimal.ZERO;
 
-        return null;
+        NbpExchangeRateResult rate = nERDL.check(currencyCode, date);
+        if (rate != null) {
+            if (rate.getResponseCode() == 200) {
+               // res = ((rate.getSeries().getRates().get(0).getMid()).multiply(BigDecimal.valueOf(amount)));
+                res = BigDecimal.valueOf(amount).divide((rate.getSeries().getRates().get(0).getMid()),2, RoundingMode.DOWN);
+            }
 
+
+            return new ExchangeResult(res, rate.getResponseCode(), rate.getErrorMessage());
+        } else return new ExchangeResult(res, 500, "Unable to Connect");
     }
 }

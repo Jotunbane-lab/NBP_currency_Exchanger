@@ -36,10 +36,11 @@ public class ExchangeLauncher {
             }
 
             switch (flag) {
-                case 1: {
-                    System.out.println(CurrecyExchangeService.exchangeFromPLN(amount,currencyCode,exchangeRateDate));
-                }
                 case 2: {
+                    System.out.println(CurrecyExchangeService.exchangeToPLNFrom(amount,currencyCode,exchangeRateDate));
+                }
+                case 1: {
+                    System.out.println(CurrecyExchangeService.exchangeFromPLNto(amount,currencyCode,exchangeRateDate));
 
 
                 }

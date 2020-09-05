@@ -16,43 +16,39 @@ public class NbpExchangeRateDownloader {
     }
 
     public static NbpExchangeRateDownloader getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new NbpExchangeRateDownloader();
         }
         return instance;
     }
 
     public NbpExchangeRateResult check(String currencyCode, LocalDate date) {
-        int responseCode = -1;
+        int responseCode;
         NbpExchangeRateSeries series = null;
-        String responseMessage = "Unable to connect";
+        String responseMessage;
         try {
-            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/" + currencyCode+"/"+date);
+            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/" + currencyCode + "/" + date);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 
 
-
             responseCode = conn.getResponseCode();
             responseMessage = conn.getResponseMessage();
+            conn.disconnect();
+            if (responseCode == 200) {
+                BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+                series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
+                return new NbpExchangeRateResult(series, responseCode, responseMessage);
+            } else {
 
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-            series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
+                return new NbpExchangeRateResult(series, responseCode, responseMessage);
 
-            switch (responseCode){
-                case 200: {
-                    return new NbpExchangeRateResult(series, responseCode, responseMessage);
-                }
-                default:{
-                    System.out.println(responseCode+" "+responseMessage);
-                }
             }
 
 
-            conn.disconnect();
-
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             System.out.println(e);
         }
         return null;

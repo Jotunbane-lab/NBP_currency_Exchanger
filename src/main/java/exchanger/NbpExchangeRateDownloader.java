@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 
 public class NbpExchangeRateDownloader {
     private static NbpExchangeRateDownloader instance;
@@ -21,23 +22,32 @@ public class NbpExchangeRateDownloader {
         return instance;
     }
 
-    public NbpExchangeRateResult check(String currencyCode) {
-        int responseCode = 0;
+    public NbpExchangeRateResult check(String currencyCode, LocalDate date) {
+        int responseCode = -1;
         NbpExchangeRateSeries series = null;
-        String responseMessage = "N/A";
+        String responseMessage = "Unable to connect";
         try {
-            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/" + currencyCode+"/last/");
+            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/" + currencyCode+"/"+date);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
-
-            series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
 
             responseCode = conn.getResponseCode();
             responseMessage = conn.getResponseMessage();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+            series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
+
+            switch (responseCode){
+                case 200: {
+                    return new NbpExchangeRateResult(series, responseCode, responseMessage);
+                }
+                default:{
+                    System.out.println(responseCode+" "+responseMessage);
+                }
+            }
 
 
             conn.disconnect();
@@ -45,7 +55,7 @@ public class NbpExchangeRateDownloader {
         } catch (IOException e) {
             System.out.println(e);
         }
-        return new NbpExchangeRateResult(series, responseCode, responseMessage);
+        return null;
     }
 
 

@@ -2,25 +2,46 @@ package launcher;
 
 import service.CurrecyExchangeService;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ExchangeLauncher {
 
     public static void main(String[] args) {
         int flag;
+        String currencyCode = null;
+        int amount=0;
+        LocalDate exchangeRateDate=null;
         Scanner scan = new Scanner(System.in);
         do {
             System.out.println("Wybierz czynność:");
-            System.out.println("1- Przelicz złotówki na inną walutę, po ostatnim kursie");
-            System.out.println("2- Przelicz inną walutę na złotówki, po ostatnim kursie");
+            System.out.println("1- Przelicz złotówki na inną walutę");
+            System.out.println("2- Przelicz inną walutę na złotówki");
             System.out.println("9- Wyjście");
             flag = scan.nextInt();
+
+            if (flag!=9){
+                System.out.println("Podaj trzy literowy kod waluty:");
+                currencyCode = scan.next();
+                System.out.println("Podaj sumę do przeliczenia:");
+                amount = scan.nextInt();
+                System.out.println("Podaj datę z której pobiorę kurs "+currencyCode);
+                System.out.print("Rok: ");
+                int year = scan.nextInt();
+                System.out.print("Miesiąc: ");
+                int month = scan.nextInt();
+                System.out.print("Dzień: ");
+                int day = scan.nextInt();
+                exchangeRateDate = LocalDate.of(year,month,day);
+            }
+
             switch (flag) {
                 case 1: {
-                    System.out.println(CurrecyExchangeService.exchangeFromPLN());
+                    System.out.println(CurrecyExchangeService.exchangeFromPLN(amount,currencyCode,exchangeRateDate));
                 }
                 case 2: {
-                    CurrecyExchangeService.exchangeToPLN();
+
+
                 }
                 default: {
                 }

@@ -16,12 +16,14 @@ public class CurrecyExchangeService {
         BigDecimal res = BigDecimal.ZERO;
 
         NbpExchangeRateResult rate = nERDL.check(currencyCode, date);
-        if (rate.getResponseCode() == 200) {
-            res = ((rate.getSeries().getRates().get(0).getMid()).multiply(BigDecimal.valueOf(amount)));
-        }
+        if (rate != null) {
+            if (rate.getResponseCode() == 200) {
+                res = ((rate.getSeries().getRates().get(0).getMid()).multiply(BigDecimal.valueOf(amount)));
+            }
 
 
-        return new ExchangeResult(res, rate.getResponseCode(), rate.getErrorMessage());
+            return new ExchangeResult(res, rate.getResponseCode(), rate.getErrorMessage());
+        } else return new ExchangeResult(res, 500, "Unable to Connect");
     }
 
     public static ExchangeResult exchangeToPLN(int amount, String currencyCode) {

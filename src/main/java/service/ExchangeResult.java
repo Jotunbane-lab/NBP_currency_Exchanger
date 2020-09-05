@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class ExchangeResult {
     private BigDecimal result;
     private int responseCode;
-    private String errorMessage;
+    private String responseMessage;
 
     public BigDecimal getResult() {
         return result;
@@ -15,14 +15,14 @@ public class ExchangeResult {
         return responseCode;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getResponseMessage() {
+        return responseMessage;
     }
 
-    public ExchangeResult(BigDecimal result, int responseCode, String errorMessage) {
+    public ExchangeResult(BigDecimal result, int responseCode, String responseMessage) {
         this.result = result;
         this.responseCode = responseCode;
-        this.errorMessage = errorMessage;
+        this.responseMessage = responseMessage;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ExchangeResult {
         return "ExchangeResult{" +
                 "result=" + result +
                 ", responseCode=" + responseCode +
-                ", errorMessage='" + errorMessage + '\'' +
+                ", responseMessage='" + responseMessage + '\'' +
                 '}';
     }
 }
